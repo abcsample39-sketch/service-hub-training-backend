@@ -4,9 +4,9 @@ import { ProvidersController } from './providers.controller';
 import { DrizzleModule } from '../drizzle/drizzle.module';
 
 @Module({
-    imports: [DrizzleModule],
-    controllers: [ProvidersController],
-    providers: [ProvidersService],
-    exports: [ProvidersService],
+  imports: [DrizzleModule],
+  controllers: [ProvidersController],
+  providers: [ProvidersService],
+  exports: [ProvidersService],
 })
-export class ProvidersModule { }
+export class ProvidersModule {}

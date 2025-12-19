@@ -12,7 +12,6 @@ const drizzleProvider: Provider = {
   useFactory: (configService: ConfigService) => {
     const connectionString = configService.get<string>('DATABASE_URL');
     if (!connectionString) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
       throw new Error('DATABASE_URL is not defined');
     }
     const pool = new Pool({
@@ -27,4 +26,4 @@ const drizzleProvider: Provider = {
   providers: [drizzleProvider],
   exports: [DRIZZLE_DB],
 })
-export class DrizzleModule { }
+export class DrizzleModule {}

@@ -7,6 +7,11 @@ import { AuthModule } from './auth/auth.module';
 import { ProvidersModule } from './providers/providers.module';
 import { AdminModule } from './admin/admin.module';
 
+import { ServicesModule } from './services/services.module';
+import { BookingsModule } from './bookings/bookings.module';
+import { ChatModule } from './chat/chat.module';
+import { UsersModule } from './users/users.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -14,6 +19,11 @@ import { AdminModule } from './admin/admin.module';
     AuthModule,
     ProvidersModule,
     AdminModule,
+    ServicesModule,
+    BookingsModule,
+    BookingsModule,
+    ChatModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

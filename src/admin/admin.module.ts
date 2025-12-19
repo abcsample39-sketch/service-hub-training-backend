@@ -4,8 +4,8 @@ import { AdminController } from './admin.controller';
 import { DrizzleModule } from '../drizzle/drizzle.module';
 
 @Module({
-    imports: [DrizzleModule],
-    controllers: [AdminController],
-    providers: [AdminService],
+  imports: [DrizzleModule],
+  controllers: [AdminController],
+  providers: [AdminService],
 })
-export class AdminModule { }
+export class AdminModule {}

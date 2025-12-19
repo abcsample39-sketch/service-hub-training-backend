@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
 export const updateProviderStatusSchema = z.object({
-    status: z.enum(['Approved', 'Rejected']),
-    rejectionReason: z.string().optional(),
+  status: z.enum(['APPROVED', 'REJECTED']),
+  rejectionReason: z.string().optional(),
 });
 
 export class UpdateProviderStatusDto {
-    static schema = updateProviderStatusSchema;
-    status!: 'Approved' | 'Rejected';
-    rejectionReason?: string;
+  static schema = updateProviderStatusSchema;
+  status!: 'APPROVED' | 'REJECTED';
+  rejectionReason?: string;
 }
