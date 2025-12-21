@@ -6,7 +6,7 @@ import { DRIZZLE_DB } from '../drizzle/drizzle.module';
 import { Inject } from '@nestjs/common';
 import { users } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
-import { DrizzleDB } from '../drizzle/types'; // We might need to define this type or infer it
+import type { DrizzleDB } from '../drizzle/types'; // We might need to define this type or infer it
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

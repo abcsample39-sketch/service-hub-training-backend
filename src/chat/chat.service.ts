@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DrizzleDB } from '../drizzle/types';
+import type { DrizzleDB } from '../drizzle/types';
 import { chatMessages } from '../drizzle/schema';
 import { eq, asc } from 'drizzle-orm';
 

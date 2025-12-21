@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { DrizzleDB } from '../drizzle/types';
 import { serviceCategories, services } from '../drizzle/schema';
-import { eq, ilike } from 'drizzle-orm';
+import { eq, ilike, and } from 'drizzle-orm';
 import { CreateServiceDto, CreateCategoryDto } from './dto/create-service.dto';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class ServicesService {
                 price: dto.price.toString(), // Drizzle decimal expects string
                 duration: dto.duration,
                 categoryId: dto.categoryId,
-                image: dto.image,
+                imageUrl: dto.image, // Use correct column name from schema
             })
             .returning();
     }
@@ -38,26 +38,20 @@ export class ServicesService {
                 description: services.description,
                 price: services.price,
                 duration: services.duration,
-                image: services.image,
-                rating: services.rating,
-                reviewCount: services.reviewCount,
+                imageUrl: services.imageUrl,
                 categoryId: services.categoryId,
                 categoryName: serviceCategories.name
             })
             .from(services)
-            .leftJoin(serviceCategories, eq(services.categoryId, serviceCategories.id));
-
-        // Use dynamic import for 'and' to avoid top-level conflict if any, 
-        // or better yet, just handle the logic cleanly with if/else as before but correctly typed.
-        // Since we are inside an async function, dynamic import is fine.
-        const { and } = await import('drizzle-orm');
+            .leftJoin(serviceCategories, eq(services.categoryId, serviceCategories.id))
+            .$dynamic();
 
         if (search && categoryId) {
-            baseQuery.where(and(ilike(services.name, `%${search}%`), eq(services.categoryId, categoryId)));
+            return await baseQuery.where(and(ilike(services.name, `%${search}%`), eq(services.categoryId, categoryId)));
         } else if (search) {
-            baseQuery.where(ilike(services.name, `%${search}%`));
+            return await baseQuery.where(ilike(services.name, `%${search}%`));
         } else if (categoryId) {
-            baseQuery.where(eq(services.categoryId, categoryId));
+            return await baseQuery.where(eq(services.categoryId, categoryId));
         }
 
         return await baseQuery;

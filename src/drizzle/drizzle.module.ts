@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { Global, Module, Provider } from '@nestjs/common';
 
 export const DRIZZLE_DB = 'DRIZZLE_DB';
+export const DRIZZLE = 'DRIZZLE'; // Alias for backwards compatibility
 
 const drizzleProvider: Provider = {
   provide: DRIZZLE_DB,
@@ -21,9 +22,17 @@ const drizzleProvider: Provider = {
   },
 };
 
+// Alias provider for services using 'DRIZZLE' token
+const drizzleAliasProvider: Provider = {
+  provide: DRIZZLE,
+  inject: [DRIZZLE_DB],
+  useFactory: (db: any) => db,
+};
+
 @Global()
 @Module({
-  providers: [drizzleProvider],
-  exports: [DRIZZLE_DB],
+  providers: [drizzleProvider, drizzleAliasProvider],
+  exports: [DRIZZLE_DB, DRIZZLE],
 })
-export class DrizzleModule {}
+export class DrizzleModule { }
+
