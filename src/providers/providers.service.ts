@@ -43,4 +43,10 @@ export class ProvidersService {
 
     return { success: true };
   }
+
+  async findAll() {
+    return await this.db.query.providerProfiles.findMany({
+      where: eq(providerProfiles.status, 'APPROVED'),
+    });
+  }
 }

@@ -56,4 +56,24 @@ export class ServicesService {
 
         return await baseQuery;
     }
+
+    async getServiceById(id: string) {
+        const result = await this.db
+            .select({
+                id: services.id,
+                name: services.name,
+                description: services.description,
+                price: services.price,
+                duration: services.duration,
+                imageUrl: services.imageUrl,
+                categoryId: services.categoryId,
+                categoryName: serviceCategories.name
+            })
+            .from(services)
+            .leftJoin(serviceCategories, eq(services.categoryId, serviceCategories.id))
+            .where(eq(services.id, id))
+            .limit(1);
+
+        return result[0];
+    }
 }

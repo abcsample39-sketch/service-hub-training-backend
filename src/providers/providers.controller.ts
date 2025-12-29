@@ -17,24 +17,19 @@ export class ProvidersController {
   @Get('status')
   @UseGuards(AuthGuard('jwt'))
   async getStatus(@Req() req: any) {
-    const userId = req.user.userId;
+    const userId = req.user.id;
     return await this.providersService.getProviderStatus(userId);
   }
 
   @Get() // Public endpoint to list providers
   async findAll() {
-    // For now, return the mock data we used in frontend or fetch from DB
-    // Since we don't have a specific service method for 'findAll' with search yet, 
-    // we can return the mock data to satisfy the frontend call
-    return [
-      { id: 'p2', userId: 'u2', businessName: 'QuickFix Plumbers', bio: '24/7 Plumbing', rating: '4.5', experience: 10, address: '5.0 km away' }
-    ];
+    return await this.providersService.findAll();
   }
 
   @Post('services')
   @UseGuards(AuthGuard('jwt'))
   async addService(@Req() req: any, @Body('serviceId') serviceId: string) {
     if (!serviceId) return { error: 'Service ID required' };
-    return await this.providersService.addServiceToProvider(req.user.userId, serviceId);
+    return await this.providersService.addServiceToProvider(req.user.id, serviceId);
   }
 }

@@ -2,20 +2,26 @@ import {
     Body,
     Controller,
     Get,
+    Param,
     Post,
     Query,
+    UseGuards,
     UsePipes,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ServicesService } from './services.service';
 import { CreateServiceDto, CreateCategoryDto } from './dto/create-service.dto';
 import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
 
 @Controller('services')
 export class ServicesController {
     constructor(private readonly servicesService: ServicesService) { }
 
     @Post('categories')
-    // TODO: Add Admin Guard
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @Roles('Admin')
     @UsePipes(new ZodValidationPipe(CreateCategoryDto.schema))
     async createCategory(@Body() dto: CreateCategoryDto) {
         return await this.servicesService.createCategory(dto);
@@ -27,7 +33,8 @@ export class ServicesController {
     }
 
     @Post()
-    // TODO: Add Admin Guard
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @Roles('Admin')
     @UsePipes(new ZodValidationPipe(CreateServiceDto.schema))
     async createService(@Body() dto: CreateServiceDto) {
         return await this.servicesService.createService(dto);
@@ -39,5 +46,10 @@ export class ServicesController {
         @Query('categoryId') categoryId?: string,
     ) {
         return await this.servicesService.getAllServices(search, categoryId);
+    }
+
+    @Get(':id')
+    async getServiceById(@Param('id') id: string) {
+        return await this.servicesService.getServiceById(id);
     }
 }

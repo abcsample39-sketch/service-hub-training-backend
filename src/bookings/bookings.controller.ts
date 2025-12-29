@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Patch, Body, Query, Param, UseGuards, Request } from '@nestjs/common';
 import { BookingsService } from './bookings.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
-// import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // Assuming generic auth guard exists
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('bookings')
 export class BookingsController {
@@ -25,20 +25,9 @@ export class BookingsController {
     }
 
     @Post()
-    // @UseGuards(JwtAuthGuard) // TODO: Enable auth
+    @UseGuards(AuthGuard('jwt'))
     async createBooking(@Body() dto: CreateBookingDto, @Request() req) {
-        // For now, since we haven't set up full auth context/guest flow in this conversation,
-        // we need to handle the 'customerId'.
-        // The schema requires a valid user ID. 
-        // IF the user is logged in, req.user.id would be available.
-        // IF NOT, we might need to create a shadow user or require login.
-
-        // Allow passing customerId in body for seeding/debug if not authenticated
-        const userId = req.user?.id || (req.body as any)?.customerId || '00000000-0000-0000-0000-000000000000'; // Placeholder
-
-        // Remove customerId from dto to avoid Zod issues if we casted, though here we just pass dto
-        // We pass userId as second arg
-        return await this.bookingsService.createBooking(dto, userId);
+        return await this.bookingsService.createBooking(dto, req.user.id);
     }
     @Get('provider/:providerId')
     async getProviderBookings(@Param('providerId') providerId: string) {

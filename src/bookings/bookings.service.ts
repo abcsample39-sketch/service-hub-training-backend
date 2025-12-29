@@ -119,7 +119,6 @@ export class BookingsService {
             providerId: dto.providerId,
             serviceId: dto.serviceId,
             customerId: customerId,
-            bookedAt: new Date(),
             date: bookingDate,
             customerName: dto.customerName,
             customerEmail: dto.customerEmail,
