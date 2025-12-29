@@ -2,54 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import type { DrizzleDB } from '../drizzle/types';
 import { providerProfiles, users } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
-import { ProviderOnboardingDto } from './dto/provider-onboarding.dto';
+
 
 @Injectable()
 export class ProvidersService {
-  constructor(@Inject('DRIZZLE') private db: DrizzleDB) {}
-
-  async submitOnboarding(userId: string, dto: ProviderOnboardingDto) {
-    // 1. Check if user exists
-    const user = await this.db.query.users.findFirst({
-      where: eq(users.id, userId),
-    });
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    // 2. Check if profile exists (upsert logic)
-    const existingProfile = await this.db.query.providerProfiles.findFirst({
-      where: eq(providerProfiles.userId, userId),
-    });
-
-    if (existingProfile) {
-      // Update
-      return await this.db
-        .update(providerProfiles)
-        .set({
-          businessName: dto.businessName,
-          address: dto.address,
-          experience: dto.experience,
-          bio: dto.bio,
-          status: 'PENDING_APPROVAL', // Reset to pending on re-submission
-        })
-        .where(eq(providerProfiles.userId, userId))
-        .returning();
-    } else {
-      // Create
-      return await this.db
-        .insert(providerProfiles)
-        .values({
-          userId,
-          businessName: dto.businessName,
-          address: dto.address,
-          experience: dto.experience,
-          bio: dto.bio,
-          status: 'PENDING_APPROVAL',
-        })
-        .returning();
-    }
-  }
+  constructor(@Inject('DRIZZLE') private db: DrizzleDB) { }
 
   // Helper to get provider status
   async getProviderStatus(userId: string) {
@@ -57,5 +14,33 @@ export class ProvidersService {
       where: eq(providerProfiles.userId, userId),
       columns: { status: true, rejectionReason: true },
     });
+  }
+
+  async addServiceToProvider(userId: string, serviceId: string) {
+    const provider = await this.db.query.providerProfiles.findFirst({
+      where: eq(providerProfiles.userId, userId),
+    });
+
+    if (!provider) {
+      // Auto-create profile if missing (simplified flow)
+      const [newProvider] = await this.db.insert(providerProfiles).values({
+        userId: userId,
+        status: 'APPROVED', // Auto-approve for now based on simplifying onboarding
+        isVerified: true,
+        services: [serviceId]
+      }).returning();
+      return newProvider;
+    }
+
+    // Append service if not exists (Postgres array append approach manually for array<text>)
+    // Drizzle doesn't support array_append easily in update object yet for pg, easiest is read-modify-write for this scale
+    const currentServices = provider.services || [];
+    if (!currentServices.includes(serviceId)) {
+      await this.db.update(providerProfiles)
+        .set({ services: [...currentServices, serviceId] })
+        .where(eq(providerProfiles.id, provider.id));
+    }
+
+    return { success: true };
   }
 }

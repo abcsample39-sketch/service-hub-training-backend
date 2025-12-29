@@ -1,0 +1,29 @@
+{"val":{"email":"debug_1766681571013@example.com","password":"Password123","name":"Debug User","role":"Customer"},"meta":"RegisterDto","hasSchema":true}
+{"val":{"email":"provider_75111@demo.com","name":"Demo Provider","password":"Password123","role":"Provider"},"meta":"RegisterDto","hasSchema":true}
+{"val":{"email":"provider_43960@demo.com","name":"Demo Provider","password":"Password123","role":"Provider"},"meta":"RegisterDto","hasSchema":true}
+{"val":{"email":"provider_28195@demo.com","name":"Demo Provider","password":"Password123","role":"Provider"},"meta":"RegisterDto","hasSchema":true}
+{"val":{"email":"customer_28195@demo.com","name":"Demo Customer","password":"Password123","role":"Customer"},"meta":"RegisterDto","hasSchema":true}
+{"meta":"String","hasSchema":false}
+{"meta":"String","hasSchema":false}
+{"val":{"serviceId":"5eebeb15-fb24-47d0-b812-b730215bc5fa","customerPhone":"0987654321","customerId":"3dfc306f-0d29-4ed3-9824-e8fd2c5f4be1","customerEmail":"customer_28195@demo.com","date":"2025-12-27T22:26:00Z","customerName":"Demo Customer","providerId":"71cef96c-886d-4ba5-b125-3b815eb2ac11","address":"123 Demo St"},"meta":"CreateBookingDto","hasSchema":true}
+{"val":{"serviceId":"5eebeb15-fb24-47d0-b812-b730215bc5fa","customerPhone":"0987654321","customerId":"3dfc306f-0d29-4ed3-9824-e8fd2c5f4be1","customerEmail":"customer_28195@demo.com","date":"2025-12-26T22:26:00Z","customerName":"Demo Customer","providerId":"71cef96c-886d-4ba5-b125-3b815eb2ac11","address":"123 Demo St"},"meta":"CreateBookingDto","hasSchema":true}
+{"val":{"status":"Accepted","providerId":"71cef96c-886d-4ba5-b125-3b815eb2ac11"},"meta":"Object","hasSchema":false}
+{"val":"f11c6004-fcb5-4f31-b1ff-17fcb3de06f3","meta":"String","hasSchema":false}
+{"val":{"serviceId":"5eebeb15-fb24-47d0-b812-b730215bc5fa","customerPhone":"0987654321","customerId":"3dfc306f-0d29-4ed3-9824-e8fd2c5f4be1","customerEmail":"customer_28195@demo.com","date":"2025-12-23T22:26:00Z","customerName":"Demo Customer","providerId":"71cef96c-886d-4ba5-b125-3b815eb2ac11","address":"123 Demo St"},"meta":"CreateBookingDto","hasSchema":true}
+{"val":{"status":"Accepted","providerId":"71cef96c-886d-4ba5-b125-3b815eb2ac11"},"meta":"Object","hasSchema":false}
+{"val":"01e5801f-5b46-4970-a0bd-e21b67a14455","meta":"String","hasSchema":false}
+{"val":{"status":"InProgress","providerId":"71cef96c-886d-4ba5-b125-3b815eb2ac11"},"meta":"Object","hasSchema":false}
+{"val":"01e5801f-5b46-4970-a0bd-e21b67a14455","meta":"String","hasSchema":false}
+{"val":{"status":"Completed","providerId":"71cef96c-886d-4ba5-b125-3b815eb2ac11"},"meta":"Object","hasSchema":false}
+{"val":"01e5801f-5b46-4970-a0bd-e21b67a14455","meta":"String","hasSchema":false}
+{"val":{"serviceId":"5eebeb15-fb24-47d0-b812-b730215bc5fa","customerPhone":"0987654321","customerId":"3dfc306f-0d29-4ed3-9824-e8fd2c5f4be1","customerEmail":"customer_28195@demo.com","date":"2025-12-20T22:26:00Z","customerName":"Demo Customer","providerId":"71cef96c-886d-4ba5-b125-3b815eb2ac11","address":"123 Demo St"},"meta":"CreateBookingDto","hasSchema":true}
+{"val":{"status":"Accepted","providerId":"71cef96c-886d-4ba5-b125-3b815eb2ac11"},"meta":"Object","hasSchema":false}
+{"val":"021087a9-0075-4113-9ff6-fa061ce41277","meta":"String","hasSchema":false}
+{"val":{"status":"Cancelled","providerId":"71cef96c-886d-4ba5-b125-3b815eb2ac11"},"meta":"Object","hasSchema":false}
+{"val":"021087a9-0075-4113-9ff6-fa061ce41277","meta":"String","hasSchema":false}
+{"meta":"String","hasSchema":false}
+{"meta":"String","hasSchema":false}
+{"meta":"String","hasSchema":false}
+{"meta":"String","hasSchema":false}
+{"val":{"password":"Password123","email":"customer_28195@demo.com"},"meta":"LoginDto","hasSchema":true}
+{"val":"3dfc306f-0d29-4ed3-9824-e8fd2c5f4be1","meta":"String","hasSchema":false}

@@ -6,10 +6,11 @@ import {
 import { ZodSchema } from 'zod';
 
 export class ZodValidationPipe implements PipeTransform {
-  constructor(private schema?: ZodSchema) {}
+  constructor(private schema?: ZodSchema) { }
 
   transform(value: unknown, metadata: ArgumentMetadata) {
     const schema = this.schema || (metadata.metatype as any)?.schema;
+
     if (schema) {
       const result = schema.safeParse(value);
       if (!result.success) {

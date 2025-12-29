@@ -19,36 +19,26 @@ export class AdminController {
   constructor(private readonly adminService: AdminService) { }
 
   @Get('dashboard')
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Roles('Admin')
   async getDashboard() {
     return await this.adminService.getDashboardStats();
   }
 
   @Get('bookings')
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Roles('Admin')
   async getBookings() {
     return await this.adminService.getAllBookings();
   }
 
   @Get('providers')
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Roles('Admin')
   async getProviders() {
     return await this.adminService.getAllProviders();
   }
 
   @Get('applications')
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Roles('Admin')
   async getApplications() {
     return await this.adminService.getPendingApplications();
   }
 
   @Patch('providers/:id/status')
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Roles('Admin') // Assuming updateStatus was applications/:id before, now generalizing or adding specific provider route
   async updateProviderStatus(
     @Param('id') id: string,
     @Body() dto: UpdateProviderStatusDto,

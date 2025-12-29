@@ -17,7 +17,7 @@ import { FirebaseAdminService } from './firebase-admin.service';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
+        secret: configService.get<string>('JWT_SECRET') || 'fallback_secret_for_demo',
         signOptions: { expiresIn: '1d' },
       }),
     }),

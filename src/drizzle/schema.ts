@@ -70,8 +70,18 @@ export const providerProfiles = pgTable('provider_profiles', {
   isVerified: boolean('is_verified').default(false).notNull(),
   rejectionReason: text('rejection_reason'),
   categoryId: uuid('category_id').references(() => serviceCategories.id),
+  services: text('services').array(),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+export const providerDocuments = pgTable('provider_documents', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  providerId: uuid('provider_id').references(() => providerProfiles.id).notNull(),
+  url: text('url').notNull(),
+  type: text('type').notNull(), // e.g., 'ID', 'Certificate'
+  name: text('name'),
+  createdAt: timestamp('created_at').defaultNow(),
 });
 
 export const services = pgTable('services', {
@@ -129,7 +139,7 @@ export const userAddressesRelations = relations(userAddresses, ({ one }) => ({
   }),
 }));
 
-export const providerProfilesRelations = relations(providerProfiles, ({ one }) => ({
+export const providerProfilesRelations = relations(providerProfiles, ({ one, many }) => ({
   user: one(users, {
     fields: [providerProfiles.userId],
     references: [users.id],
@@ -137,6 +147,14 @@ export const providerProfilesRelations = relations(providerProfiles, ({ one }) =
   category: one(serviceCategories, {
     fields: [providerProfiles.categoryId],
     references: [serviceCategories.id],
+  }),
+  documents: many(providerDocuments),
+}));
+
+export const providerDocumentsRelations = relations(providerDocuments, ({ one }) => ({
+  provider: one(providerProfiles, {
+    fields: [providerDocuments.providerId],
+    references: [providerProfiles.id],
   }),
 }));
 

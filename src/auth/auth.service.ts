@@ -3,6 +3,7 @@ import {
   UnauthorizedException,
   ConflictException,
   Inject,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { DRIZZLE_DB } from '../drizzle/drizzle.module';
@@ -22,7 +23,7 @@ export class AuthService {
   constructor(
     @Inject(DRIZZLE_DB) private db: DrizzleDB,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async register(registerDto: RegisterDto) {
     // Check if user exists

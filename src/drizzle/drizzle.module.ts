@@ -17,6 +17,7 @@ const drizzleProvider: Provider = {
     }
     const pool = new Pool({
       connectionString,
+      ssl: { rejectUnauthorized: false }, // Required for Neon DB
     });
     return drizzle(pool, { schema });
   },

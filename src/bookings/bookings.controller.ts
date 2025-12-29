@@ -33,11 +33,12 @@ export class BookingsController {
         // IF the user is logged in, req.user.id would be available.
         // IF NOT, we might need to create a shadow user or require login.
 
-        // Temporary Hack: use a known test user ID or failure if not auth.
-        // I will just pass a placeholder ID if req.user is missing.
-        const userId = req.user?.id || '00000000-0000-0000-0000-000000000000'; // Placeholder
+        // Allow passing customerId in body for seeding/debug if not authenticated
+        const userId = req.user?.id || (req.body as any)?.customerId || '00000000-0000-0000-0000-000000000000'; // Placeholder
 
-        return await this.bookingsService.createBooking({ ...dto /*, userId */ });
+        // Remove customerId from dto to avoid Zod issues if we casted, though here we just pass dto
+        // We pass userId as second arg
+        return await this.bookingsService.createBooking(dto, userId);
     }
     @Get('provider/:providerId')
     async getProviderBookings(@Param('providerId') providerId: string) {

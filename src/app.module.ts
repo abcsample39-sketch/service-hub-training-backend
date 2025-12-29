@@ -12,6 +12,9 @@ import { BookingsModule } from './bookings/bookings.module';
 import { ChatModule } from './chat/chat.module';
 import { UsersModule } from './users/users.module';
 
+import { PaymentsModule } from './payments/payments.module';
+import { UploadModule } from './upload/upload.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -21,9 +24,10 @@ import { UsersModule } from './users/users.module';
     AdminModule,
     ServicesModule,
     BookingsModule,
-    BookingsModule,
     ChatModule,
     UsersModule,
+    PaymentsModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

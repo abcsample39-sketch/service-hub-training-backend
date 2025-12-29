@@ -98,7 +98,7 @@ export class BookingsService {
         });
     }
 
-    async createBooking(dto: CreateBookingDto) {
+    async createBooking(dto: CreateBookingDto, customerId: string) {
         // Basic validation: Check if slot is already taken
         const bookingDate = new Date(dto.date);
 
@@ -118,7 +118,7 @@ export class BookingsService {
         return await this.db.insert(bookings).values({
             providerId: dto.providerId,
             serviceId: dto.serviceId,
-            customerId: dto.providerId, // TODO: Replace with real Auth ID
+            customerId: customerId,
             bookedAt: new Date(),
             date: bookingDate,
             customerName: dto.customerName,
